@@ -273,6 +273,52 @@ Tables created:
 
 ---
 
+## 🚀 Deploying to Vercel (Production)
+
+NEXORA is configured for seamless deployment to **Vercel** with a unified monorepo architecture:
+
+### Option 1: Automatic Deployment via GitHub (Recommended)
+
+1. **Push this repository to GitHub**:
+   ```bash
+   git remote add origin https://github.com/<your-username>/nexora.git
+   git branch -M main
+   git push -u origin main
+   ```
+2. **Import into Vercel**:
+   - Go to [vercel.com/new](https://vercel.com/new).
+   - Select your `nexora` repository.
+   - **Framework Preset**: Vite (detected automatically).
+   - **Root Directory**: `./` (leave default).
+   - **Build Command**: `npm run build` (configured automatically via `vercel.json`).
+   - **Output Directory**: `client/dist` (configured automatically via `vercel.json`).
+3. **Configure Environment Variables**:
+   Under **Environment Variables** in the Vercel deployment screen:
+   - `GEMINI_API_KEY`: Your Google Gemini API key from [Google AI Studio](https://aistudio.google.com/)
+   - `GEMINI_MODEL`: `gemini-3.8-flash`
+   - `NODE_ENV`: `production`
+4. **Click Deploy**:
+   Vercel compiles the Vite frontend into global CDN assets and spins up the Express serverless function at `/api`.
+
+### Option 2: Direct Deployment via Vercel CLI
+
+```bash
+# Log in to Vercel
+npx vercel login
+
+# Deploy directly to production
+npx vercel --prod
+```
+
+### Serverless Architecture on Vercel
+- **Frontend**: Served from Vercel's global Edge Network with instant SSL and automatic cache invalidation.
+- **Backend API**: The Express app in [`server/src/app.ts`](file:///C:/Users/user5/.gemini/antigravity-ide/scratch/nexora/server/src/app.ts) runs as a serverless function via [`api/index.ts`](file:///C:/Users/user5/.gemini/antigravity-ide/scratch/nexora/api/index.ts).
+- **SPA Routing**: Configured via [`vercel.json`](file:///C:/Users/user5/.gemini/antigravity-ide/scratch/nexora/vercel.json) rewrites so refreshing `/dashboard`, `/interview`, or `/topics` never causes 404 errors.
+- **Database**: In serverless lambdas, SQLite automatically operates in `/tmp/nexora.db`. For long-term multi-instance data persistence, an external backend URL can also be configured with `VITE_API_URL`.
+
+
+---
+
 ## 🎓 College Activity Modules
 
 NEXORA includes special dedicated interview modules for required academic activities:
