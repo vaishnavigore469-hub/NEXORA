@@ -1,4 +1,4 @@
-import app from '../server/src/app.js';
+import app from '../server/dist/app.js';
 
 export default function handler(req: any, res: any) {
   return app(req, res);
