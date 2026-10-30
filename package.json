@@ -12,9 +12,9 @@
     "node": ">=22.0.0"
   },
   "scripts": {
-    "build": "npm run build:server && npm run build:client",
-    "build:server": "cd server && npm install --include=dev && npm run build",
-    "build:client": "cd client && npm install --include=dev && npm run build",
+    "build": "npm run build --prefix server && npm run build --prefix client",
+    "build:server": "npm run build --prefix server",
+    "build:client": "npm run build --prefix client",
     "install:all": "npm install --include=dev && cd server && npm install --include=dev && cd ../client && npm install --include=dev",
     "start": "node server/dist/index.js",
     "dev:server": "npm run dev --prefix server",
